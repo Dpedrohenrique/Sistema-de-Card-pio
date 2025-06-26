@@ -1,0 +1,74 @@
+<html>
+<head>
+    <link rel="stylesheet" href="static/estilos.css">
+    <script src="static/muda_nome.js"></script>
+    <script src="static/trabalha_string.js"></script>
+    <script src="static/atualiza_pratos.js"></script>
+    <script src="static/cores_da_pagina.js"></script>
+    <script src="static/adicionar_conta.js"></script>
+</head>
+
+<body>
+
+<div class="div_0">
+    
+    <div id="div_1">
+        <label for="input-nome">Seu nome:</label>
+        <input id="input-nome" oninput="atualizarNome()">
+
+        <h2 style="margin-top: 20px;">Adicionar prato ao pedido:</h2>
+        
+        <!-- Seletor maior e com "click aqui" -->
+        <select id="seletor-prato" style="font-size: 18px; padding: 8px;">
+            {% for prato in pratos %}
+                <option value="{{ prato.preco }}">{{ prato.nome }} - R$ {{ "%.2f"|format(prato.preco) }}</option>
+            {% endfor %}
+        </select>
+        <span style="font-weight: bold; margin-left: 10px; cursor: pointer;" onclick="document.getElementById('seletor-prato').focus()">click aqui</span>
+        <button onclick="adicionarConta()">Adicionar</button>
+
+        <h3>Total da Conta: R$ <span id="total-conta">0.00</span></h3>
+
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+        <p id="mensagem-final" style="font-weight: bold; color: green;"></p>
+    </div>
+
+    <div id="div_2">
+        <h1>Olá <span id="span-nome"></span>!</h1>
+
+        {% if pratos|length == 0 %}
+            <h3>Sem pratos disponíveis</h3>
+        {% else %}
+            <h3>Pratos do dia</h3>
+        {% endif %}
+
+        <div id="lista-cardapio">
+            {% for prato in pratos %}
+                <div class="card-prato">
+                    <h3>{{ prato.nome }}</h3>
+                    <p><strong>Ingredientes:</strong> {{ prato.ingredientes }}</p>
+                    <p><strong>Preço:</strong> R$ {{ "%.2f"|format(prato.preco) }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>Mudar Cor do Fundo:</h2>
+    <button onclick="mudarCorDeFundo('lightblue')">Azul Claro</button>
+    <button onclick="mudarCorDeFundo('lightgreen')">Verde Claro</button>
+    <button onclick="mudarCorDeFundo('lightpink')">Rosa Claro</button>
+    <button onclick="mudarCorDeFundo('lightyellow')">Amarelo Claro</button>
+
+</div>
+
+<script>
+    function atualizarNome() {
+        const nomeInput = document.getElementById('input-nome').value;
+        document.getElementById('span-nome').textContent = nomeInput;
+    }
+</script>
+
+</body>
+</html>
